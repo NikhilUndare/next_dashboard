@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg:#151c2c;
+  --bgSoft :#182237;
+  --text: white;
+  --textsoft :#b7bac1;
+}
+
+* {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-poppins);
+  background-color: var(--bg);
+  color :var(--text)
+}
+
+
+
+.darkbg {
+  background-color: #151c2c;
+}
+.softbg{
+  background-color: #182237;
+}
+.text-soft{
+  color: #b7bac1;
+}
