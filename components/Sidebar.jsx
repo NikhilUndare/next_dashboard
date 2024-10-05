@@ -102,7 +102,7 @@ const Sidebar = () => {
                 </ul>
             ))
         }
-        <div className="px-4 py-2 rounded-lg flex gap-2 items-center hover:bg-slate-700">
+        <div className="px-4 py-2 rounded-lg flex gap-2 items-center hover:bg-slate-700 hover:cursor-pointer">
         <MdLogout />
         LogOut
 
@@ -110,6 +110,7 @@ const Sidebar = () => {
        </div>
        
     </div>
+   
   )
 }
 

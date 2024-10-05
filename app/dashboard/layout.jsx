@@ -1,15 +1,18 @@
-import Navbar from '@/components/Navbar'
-import Sidebar from '@/components/Sidebar'
-import React from 'react'
+
+
+import Navbar from '../../components/Navbar'
+import Sidebar from '../../components/Sidebar'
+
+
 
 const layout = ({children}) => {
   return (
     <div className='flex'>
         <div className=' softbg w-1/4'>
-            <Sidebar />
+         <Sidebar />
         </div>
-        <div className='bg-slate-300 w-full'>
-         <Navbar />
+        <div className='p-8 w-full'>
+        <Navbar />
         {children}
         </div>
     </div>
