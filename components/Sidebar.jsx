@@ -78,7 +78,7 @@ const menuItems = [
 
 const Sidebar = () => {
   return (
-    <div className=" p-6 h-screen ">
+    <div className="sticky top-0 p-6 h-screen  ">
         <div className="flex  gap-5 border-b p-2">
             <Image 
              src='/assets/profile.webp'
