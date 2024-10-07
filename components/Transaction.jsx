@@ -22,7 +22,7 @@ const Transaction = () => {
           <tbody>
              <tr>
               <td className='flex gap-2 items-center '>
-                 <Image src='/assets/newprofile.avif'
+                 <Image src='/assets/demo1.jpg'
                  alt='profile img'
                  width={30}
                  height={30}
@@ -35,7 +35,7 @@ const Transaction = () => {
              </tr >
              <tr>
               <td className='flex gap-2 items-center '>
-                 <Image src='/assets/newprofile.avif'
+                 <Image src='/assets/demo1.jpg'
                  alt='profile img'
                  width={30}
                  height={30}
@@ -48,7 +48,7 @@ const Transaction = () => {
              </tr >
              <tr>
               <td className='flex gap-2 items-center '>
-                 <Image src='/assets/newprofile.avif'
+                 <Image src='/assets/demo1.jpg'
                  alt='profile img'
                  width={30}
                  height={30}
@@ -61,7 +61,7 @@ const Transaction = () => {
              </tr >
              <tr>
               <td className='flex gap-2 items-center '>
-                 <Image src='/assets/newprofile.avif'
+                 <Image src='/assets/demo1.jpg'
                  alt='profile img'
                  width={30}
                  height={30}
