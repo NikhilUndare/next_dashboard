@@ -2,6 +2,7 @@
 
 import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
+import Footer from '../../components/Footer'
 
 
 
@@ -14,6 +15,7 @@ const layout = ({children}) => {
         <div className='p-8 w-full'>
         <Navbar />
         {children}
+        <Footer />
         </div>
     </div>
   )
