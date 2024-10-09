@@ -43,7 +43,7 @@ const page = () => {
                     <td >23/02/2024</td>
                     <td >11</td>
                     <td className=' flex space-x-4 items-center' >
-                        <Link href='/'><button className='py-1 px-2 text-sm bg-blue-600 rounded-md hover:bg-blue-800'>view</button></Link>
+                        <Link href='/dashboard/products/product123'><button className='py-1 px-2 text-sm bg-blue-600 rounded-md hover:bg-blue-800'>view</button></Link>
                         <Link href='/' > <button className='py-1 px-2 text-sm bg-red-500 rounded-md hover:bg-red-700'>delete</button></Link>   
                     </td>
                 </tr>
