@@ -15,6 +15,16 @@ export const fetchUsers = async(q , page) => {
     }
 }
 
+export const fetchSingleUser = async(userId) => {
+    try {
+     await connectToDB()
+      const user = await User.findById(userId);
+      return user;  
+    } catch (error) {
+        handleError(error)
+    }
+}
+
 export const fetchUsersCount = async(q) => {
     const regex = new RegExp(q , "i")
     try {

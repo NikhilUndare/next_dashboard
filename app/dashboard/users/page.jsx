@@ -1,15 +1,17 @@
 import Link from 'next/link'
-import {fetchUsers, fetchUsersCount} from '../../lib/actions/user.actions'
+import { fetchUsers, fetchUsersCount } from '../../lib/actions/user.actions'
 import SearchBar from '../../../components/SearchBar'
 import Pagination from '../../../components/Pagination'
 import Image from 'next/image'
+import {deleteUser} from'../../lib/actions/serverActions'
 
-const page = async({searchParams}) => {
+
+const page = async ({ searchParams }) => {
     const q = searchParams?.q || "";
     const page = searchParams?.page || 1;
-    const users = await fetchUsers(q , page);
+    const users = await fetchUsers(q, page);
     const count = await fetchUsersCount(q);
-    
+
     //console.log(users)
     return (
         <div className='p-4 softbg mt-5 rounded-md'>
@@ -40,28 +42,36 @@ const page = async({searchParams}) => {
                         }
                         {users.map((user) => (
 
-                            <tr  key={user._id}  >
-                            <td  >
-                                <div className='flex gap-3 items-center'>
-                                    <Image src={user.img || '/assets/demo1.jpg'}
-                                        alt='profile img'
-                                        width={40}
-                                        height={40}
-                                        className='rounded-full object-cover' />
-                                    {user.username}
-                                </div>
-                            </td>
-                            <td className='p-3' >{user.email}</td>
-                            <td >{user.createdAt?.toString().slice(4,16)}</td>
-                            <td >{user.isAdmin ? "Admin" : "Client"}</td>
-                            <td >{user.isActive ? "Active" : "Passive"}</td>
-                            <td className=' flex space-x-4 items-center mt-2' >
-                                <Link href={`/dashboard/users/${user.id}`}><button className='py-1 px-2 text-sm bg-blue-600 rounded-md hover:bg-blue-800'>view</button></Link>
-                                <Link href='/' > <button className='py-1 px-2 text-sm bg-red-500 rounded-md hover:bg-red-700'>delete</button></Link>   
-                            </td>
-                        </tr>
-                        
-                    ))}
+                            <tr key={user._id}  >
+                                <td  >
+                                    <div className='flex gap-3 items-center'>
+                                        <div className='w-[40px] h-[40px] rounded-full overflow-hidden'>
+                                            <Image
+                                                src={user.img || '/assets/demo1.jpg'}
+                                                alt='profile img'
+                                                width={30}
+                                                height={30}
+                                                className='object-cover'
+                                                style={{ width: '100%', height: '100%' }}
+                                            />
+                                        </div>
+                                        {user.username}
+                                    </div>
+                                </td>
+                                <td className='p-4' >{user.email}</td>
+                                <td >{user.createdAt?.toString().slice(4, 16)}</td>
+                                <td >{user.isAdmin ? "Admin" : "Client"}</td>
+                                <td >{user.isActive ? "Active" : "Passive"}</td>
+                                <td className=' flex space-x-4 items-center mt-3' >
+                                    <Link href={`/dashboard/users/${user.id}`}><button className='py-1 px-2 text-sm bg-blue-600 rounded-md hover:bg-blue-800'>view</button></Link>
+                                    <form action={deleteUser}>
+                                        <input type='hidden' name="id" value={user.id}/>
+                                      <button className='py-1 px-2 text-sm bg-red-500 rounded-md hover:bg-red-700'>delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+
+                        ))}
                     </tbody>
                 </table>
                 <Pagination count={count} />

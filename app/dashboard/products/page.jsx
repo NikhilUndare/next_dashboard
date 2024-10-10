@@ -2,8 +2,17 @@ import Link from 'next/link'
 import SearchBar from '../../../components/SearchBar'
 import Pagination from '../../../components/Pagination'
 import Image from 'next/image'
+import { fetchProducts, fetchProductsCount } from '../../lib/actions/product.actions'
+import {deleteProduct} from'../../lib/actions/serverActions'
 
-const page = () => {
+const page = async ({searchParams}) => {
+    const q = searchParams?.q || "";
+    const page = searchParams?.page || 1;
+    const products = await fetchProducts(q,page);
+    const count = await fetchProductsCount(q);
+   // console.log(count);
+    // console.log(products)
+
   return (
     <div className='p-4 softbg mt-5 rounded-md'>
     <div className='flex justify-between items-center' >
@@ -27,30 +36,46 @@ const page = () => {
                 </tr>
             </thead>
             <tbody>
-                <tr   >
+                {
+                   products.length == 0 && <p className=' mt-10 text-2xl tracking-wider '>No Product Found!</p>
+                }
+                {
+                 products.map((product) => (
+
+                     <tr key={product.id}  >
                     <td >
-                        <div className='flex gap-3 items-center'>
-                            <Image src='/assets/demo1.jpg'
-                                alt='profile img'
-                                width={30}
-                                height={30}
-                                className='rounded-full object-contain' />
-                            Iphone
-                        </div>
+                    <div className='flex gap-3 items-center'>
+                      <div className='w-[40px] h-[40px] rounded-full overflow-hidden'>
+                        <Image
+                           src={product.img || '/assets/demo1.jpg'}
+                             alt='profile img'
+                             width={30}
+                             height={30}
+                             className='object-cover'
+                             style={{ width: '100%', height: '100%' }}
+                             />
+                            </div>
+                            {product.title}
+                      </div>
                     </td>
-                    <td >Demo description</td>
-                    <td >₹ 54,000</td>
-                    <td >23/02/2024</td>
-                    <td >11</td>
-                    <td className=' flex space-x-4 items-center' >
-                        <Link href='/dashboard/products/product123'><button className='py-1 px-2 text-sm bg-blue-600 rounded-md hover:bg-blue-800'>view</button></Link>
-                        <Link href='/' > <button className='py-1 px-2 text-sm bg-red-500 rounded-md hover:bg-red-700'>delete</button></Link>   
+                    <td className='p-4'>{product.description}</td>
+                    <td >₹ {product.price}</td>
+                    <td >{product.createdAt?.toString().slice(4,16)}</td>
+                    <td >{product.stock}</td>
+                    <td className=' flex space-x-4 items-center mt-3' >
+                        <Link href={`/dashboard/products/${product.id}`}><button className='py-1 px-2 text-sm bg-blue-600 rounded-md hover:bg-blue-800'>view</button></Link>
+                        <form action={deleteProduct}>
+                            <input type='hidden' name="id" value={product.id} />
+                        <button className='py-1 px-2 text-sm bg-red-500 rounded-md hover:bg-red-700'>delete</button>  
+                        </form>
                     </td>
                 </tr>
+               ))   
+             }
                 
             </tbody>
         </table>
-        <Pagination />
+        <Pagination count={count} />
     </div>
 
 </div>

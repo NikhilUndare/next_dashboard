@@ -1,18 +1,22 @@
 import Image from 'next/image'
+import { fetchSingleUser } from '../../../lib/actions/user.actions'
 
-
-const page = () => {
+const page = ({params}) => {
+    const {userId} = params;
+    console.log(userId);
+    const user = fetchSingleUser(userId)
+   // console.log(user)
     return (
         <div className=' mt-5    flex gap-10'>
             <div className='w-2/5 rounded-md softbg flex flex-col items-center  h-1/3 p-4'>
                 <div>
-                    <Image src='/assets/demo1.jpg'
+                    <Image src={user.img ||'/assets/demo1.jpg'}
                         alt='user image'
                         width={250}
                         height={250}
                         className='rounded-lg' />
                 </div>
-                <p className='text-xl mt-5'>New User</p>
+                <p className='text-xl mt-5'>{user.username}</p>
             </div>
             <div className='flex rounded-md px-8 py-4 flex-col softbg gap-4 w-full'>
                 <form>
