@@ -1,9 +1,16 @@
 import Link from 'next/link'
+import {fetchUsers, fetchUsersCount} from '../../lib/actions/user.actions'
 import SearchBar from '../../../components/SearchBar'
 import Pagination from '../../../components/Pagination'
 import Image from 'next/image'
 
-const page = () => {
+const page = async({searchParams}) => {
+    const q = searchParams?.q || "";
+    const page = searchParams?.page || 1;
+    const users = await fetchUsers(q , page);
+    const count = await fetchUsersCount(q);
+    
+    //console.log(users)
     return (
         <div className='p-4 softbg mt-5 rounded-md'>
             <div className='flex justify-between items-center' >
@@ -17,7 +24,8 @@ const page = () => {
             <div className='mt-5 border-t '>
                 <table className=' mt-5 w-[100%] ' >
                     <thead >
-                        <tr  >
+
+                        <tr>
                             <td className='py-4' >Name</td>
                             <td >Email</td>
                             <td>Created At</td>
@@ -27,30 +35,36 @@ const page = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr   >
-                            <td >
+                        {
+                            users.length == 0 && <p className=' mt-10 text-2xl tracking-wider '>No User Found!</p>
+                        }
+                        {users.map((user) => (
+
+                            <tr  key={user._id}  >
+                            <td  >
                                 <div className='flex gap-3 items-center'>
-                                    <Image src='/assets/demo1.jpg'
+                                    <Image src={user.img || '/assets/demo1.jpg'}
                                         alt='profile img'
-                                        width={30}
-                                        height={30}
-                                        className='rounded-full object-contain' />
-                                    John Doe
+                                        width={40}
+                                        height={40}
+                                        className='rounded-full object-cover' />
+                                    {user.username}
                                 </div>
                             </td>
-                            <td >John@gmail.com</td>
-                            <td >23/02/2024</td>
-                            <td >client</td>
-                            <td >passive</td>
-                            <td className=' flex space-x-4 items-center' >
-                                <Link href='/dashboard/users/test12345'><button className='py-1 px-2 text-sm bg-blue-600 rounded-md hover:bg-blue-800'>view</button></Link>
+                            <td className='p-3' >{user.email}</td>
+                            <td >{user.createdAt?.toString().slice(4,16)}</td>
+                            <td >{user.isAdmin ? "Admin" : "Client"}</td>
+                            <td >{user.isActive ? "Active" : "Passive"}</td>
+                            <td className=' flex space-x-4 items-center mt-2' >
+                                <Link href={`/dashboard/users/${user.id}`}><button className='py-1 px-2 text-sm bg-blue-600 rounded-md hover:bg-blue-800'>view</button></Link>
                                 <Link href='/' > <button className='py-1 px-2 text-sm bg-red-500 rounded-md hover:bg-red-700'>delete</button></Link>   
                             </td>
                         </tr>
                         
+                    ))}
                     </tbody>
                 </table>
-                <Pagination />
+                <Pagination count={count} />
             </div>
 
         </div>
