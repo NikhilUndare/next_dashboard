@@ -58,7 +58,7 @@ const page = async ({ searchParams }) => {
                                         {user.username}
                                     </div>
                                 </td>
-                                <td className='p-4' >{user.email}</td>
+                                <td className='py-4' >{user.email}</td>
                                 <td >{user.createdAt?.toString().slice(4, 16)}</td>
                                 <td >{user.isAdmin ? "Admin" : "Client"}</td>
                                 <td >{user.isActive ? "Active" : "Passive"}</td>

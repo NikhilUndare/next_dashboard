@@ -7,6 +7,7 @@ import { redirect } from 'next/navigation'
 import bcrypt from 'bcrypt'
 import Product from '../database/models/product.model'
 
+
 export const addUser = async(formData) => {
   const {username , email ,password,phone,address,isAdmin,isActive} = Object.fromEntries(formData);
 
@@ -23,6 +24,40 @@ export const addUser = async(formData) => {
    }
    revalidatePath('/dashboard/users')
    redirect('/dashboard/users')
+}
+
+export const updateUser = async(formData) => {
+  const {id,username , email ,password,phone,address,isAdmin,isActive} = Object.fromEntries(formData);
+
+   try {
+     await connectToDB();
+     const updateFields = {username , email ,password,phone,address,isAdmin,isActive};
+
+     Object.keys(updateFields).forEach((key) => 
+    (updateFields[key] === "" || undefined) && delete updateFields[key]);
+     await User.findByIdAndUpdate(id,updateFields)
+   } catch (error) {
+    handleError(error)
+   }
+   revalidatePath('/dashboard/users')
+   redirect('/dashboard/users')
+}
+
+export const updateProduct = async(formData) => {
+  const {id,title,description,price,stock,color,size} = Object.fromEntries(formData);
+
+   try {
+     await connectToDB();
+     const updateFields = {title,description,price,stock,color,size};
+
+     Object.keys(updateFields).forEach((key) => 
+    (updateFields[key] === "" || undefined) && delete updateFields[key]);
+     await Product.findByIdAndUpdate(id,updateFields)
+   } catch (error) {
+    handleError(error)
+   }
+   revalidatePath('/dashboard/products')
+   redirect('/dashboard/products')
 }
 
 export const addProduct = async(formData) => {
@@ -67,3 +102,4 @@ export const deleteProduct = async(formData) => {
    revalidatePath('/dashboard/products')
    
 }
+

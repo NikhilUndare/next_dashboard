@@ -58,7 +58,7 @@ const page = async ({searchParams}) => {
                             {product.title}
                       </div>
                     </td>
-                    <td className='p-4'>{product.description}</td>
+                    <td className='py-4'>{product.description}</td>
                     <td >₹ {product.price}</td>
                     <td >{product.createdAt?.toString().slice(4,16)}</td>
                     <td >{product.stock}</td>
